@@ -1,0 +1,17 @@
+services:
+  airflow:
+    build: .
+    container_name: hospital-airflow
+    command: standalone
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ../hospital_analytics:/opt/dbt/hospital_analytics
+      - /home/shahd/.dbt:/home/airflow/.dbt:ro
+    restart: unless-stopped

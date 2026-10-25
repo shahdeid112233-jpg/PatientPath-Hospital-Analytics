@@ -1,0 +1,10 @@
+flowchart TD
+    A["Hospital Data Sources"] --> B["Snowflake RAW"]
+    B --> C["dbt Staging Models"]
+    C --> D["dbt Intermediate Models"]
+    D --> E["dbt Marts"]
+    E --> F["Streamlit Dashboard"]
+    G["Apache Airflow"] --> H["dbt run"]
+    H --> I["dbt test"]
+    I --> J["Validated Data Models"]
+    J -. "Builds and validates" .-> E

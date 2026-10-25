@@ -1,0 +1,113 @@
+version: 2
+
+models:
+  - name: stg_patients
+    columns:
+      - name: patient_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_encounters
+    columns:
+      - name: encounter_id
+        data_tests:
+          - not_null
+          - unique
+      - name: patient_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_patients')
+                field: patient_id
+
+  - name: stg_payers
+    columns:
+      - name: payer_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fct_encounters
+    columns:
+      - name: encounter_id
+        data_tests:
+          - not_null
+          - unique
+      - name: patient_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_patients')
+                field: patient_id
+      - name: payer_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_payers')
+                field: payer_id
+
+  - name: dim_patients
+    columns:
+      - name: patient_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_payers
+    columns:
+      - name: payer_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fct_procedures
+    columns:
+      - name: encounter_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_encounters')
+                field: encounter_id
+      - name: procedure_code
+        data_tests:
+          - not_null
+
+  - name: mart_encounter_summary
+    columns:
+      - name: encounter_year
+        data_tests:
+          - not_null
+      - name: encounter_quarter
+        data_tests:
+          - not_null
+      - name: encounter_class
+        data_tests:
+          - not_null
+
+  - name: mart_readmissions
+    columns:
+      - name: encounter_id
+        data_tests:
+          - not_null
+          - unique
+      - name: patient_id
+        data_tests:
+          - not_null
+      - name: readmission_within_30_days
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+  - name: mart_procedure_summary
+    columns:
+      - name: procedure_code
+        data_tests:
+          - not_null
+      - name: procedure_count
+        data_tests:
+          - not_null

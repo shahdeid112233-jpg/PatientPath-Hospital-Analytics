@@ -1,0 +1,22 @@
+SELECT
+    ID AS patient_id,
+    BIRTHDATE AS birth_date,
+    DEATHDATE AS death_date,
+    PREFIX AS patient_prefix,
+    FIRST AS first_name,
+    LAST AS last_name,
+    SUFFIX AS patient_suffix,
+    MAIDEN AS maiden_name,
+    MARITAL AS marital_status,
+    RACE AS race,
+    ETHNICITY AS ethnicity,
+    GENDER AS gender,
+    BIRTHPLACE AS birth_place,
+    ADDRESS AS patient_address,
+    CITY AS patient_city,
+    STATE AS patient_state,
+    COUNTY AS patient_county,
+    ZIP AS patient_zip,
+    LAT AS latitude,
+    LON AS longitude
+FROM HOSPITAL_DB.RAW.PATIENTS

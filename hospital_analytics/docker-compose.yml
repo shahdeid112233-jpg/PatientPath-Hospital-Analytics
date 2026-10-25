@@ -1,0 +1,9 @@
+services:
+  hospital-dashboard:
+    build: .
+    container_name: hospital-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./.streamlit/secrets.toml:/app/.streamlit/secrets.toml:ro
+    restart: unless-stopped
